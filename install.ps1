@@ -58,9 +58,11 @@ Write-Host "[*] Fetching Lux Runtime..." -ForegroundColor Yellow
 $luxRelease = Get-LatestRelease -Repo $LuxRepo
 
 if ($luxRelease) {
-    $luxUrl = Get-AssetUrl -Release $luxRelease -Pattern "lux.*windows.*\.exe$|lux-windows.*\.exe$|lux\.exe$"
+    # Match exact binary name or windows-specific variations
+    $luxUrl = Get-AssetUrl -Release $luxRelease -Pattern "^lux\.exe$|lux-windows.*\.exe$"
+    
+    # Fallback to legacy zip if needed
     if (-not $luxUrl) {
-        # Try zip
         $luxUrl = Get-AssetUrl -Release $luxRelease -Pattern "lux.*windows.*\.zip$"
     }
     
