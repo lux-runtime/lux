@@ -71,7 +71,7 @@ jobs:
         if: matrix.use_wix
         # Wix handles the build implicitly or explicitly via --release.
         # We use --nocapture to see logs.
-        run: cargo wix --release --package lux --nocapture
+        run: cargo wix --package lux
 
       - name: Build (Standard)
         if: ${{ !matrix.use_wix && !matrix.use_cross }}
