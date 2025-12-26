@@ -1,0 +1,119 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            artifact_name: lux.exe
+            asset_name: lux-windows-x86_64.exe
+
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact_name: lux
+            asset_name: lux-linux-x86_64
+
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            artifact_name: lux
+            asset_name: lux-macos-x86_64
+
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            artifact_name: lux
+            asset_name: lux-macos-aarch64
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-action@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Build
+        run: cargo build --release --target ${{ matrix.target }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset_name }}
+          path: target/${{ matrix.target }}/release/${{ matrix.artifact_name }}
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Prepare release assets
+        run: |
+          mkdir -p release
+          cp artifacts/lux-windows-x86_64.exe/lux.exe release/lux-windows-x86_64.exe
+          cp artifacts/lux-linux-x86_64/lux release/lux-linux-x86_64
+          cp artifacts/lux-macos-x86_64/lux release/lux-macos-x86_64
+          cp artifacts/lux-macos-aarch64/lux release/lux-macos-aarch64
+          chmod +x release/lux-linux-x86_64
+          chmod +x release/lux-macos-x86_64
+          chmod +x release/lux-macos-aarch64
+
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Lux v${{ steps.get_version.outputs.VERSION }}
+          body: |
+            ## Lux Runtime v${{ steps.get_version.outputs.VERSION }}
+
+            ### Downloads
+
+            | Platform | Download |
+            |----------|----------|
+            | Windows x64 | [lux-windows-x86_64.exe](https://github.com/lux-runtime/lux/releases/download/v${{ steps.get_version.outputs.VERSION }}/lux-windows-x86_64.exe) |
+            | Linux x64 | [lux-linux-x86_64](https://github.com/lux-runtime/lux/releases/download/v${{ steps.get_version.outputs.VERSION }}/lux-linux-x86_64) |
+            | macOS x64 | [lux-macos-x86_64](https://github.com/lux-runtime/lux/releases/download/v${{ steps.get_version.outputs.VERSION }}/lux-macos-x86_64) |
+            | macOS ARM64 | [lux-macos-aarch64](https://github.com/lux-runtime/lux/releases/download/v${{ steps.get_version.outputs.VERSION }}/lux-macos-aarch64) |
+
+            ### Quick Install (Windows)
+
+            ```powershell
+            irm https://raw.githubusercontent.com/lux-runtime/lux/main/install.ps1 | iex
+            ```
+
+            ### Documentation
+
+            https://lux-runtime.github.io/docs/
+          files: |
+            release/lux-windows-x86_64.exe
+            release/lux-linux-x86_64
+            release/lux-macos-x86_64
+            release/lux-macos-aarch64
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

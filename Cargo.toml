@@ -1,0 +1,56 @@
+[workspace]
+resolver = "2"
+default-members = ["crates/lux"]
+members = [
+    "crates/lux",
+    "crates/lux-std",
+    "crates/lux-ffi",
+    "crates/lux-fs",
+    "crates/lux-luau",
+    "crates/lux-process",
+    "crates/lux-regex",
+    "crates/lux-serde",
+    "crates/lux-signal",
+    "crates/lux-stdio",
+    "crates/lux-utils",
+    "crates/mlua-luau-scheduler",
+]
+
+# Maximum optimization for micro-kernel binary
+[profile.release]
+lto = "fat"
+codegen-units = 1
+panic = "unwind"  # Required for catch_unwind in FFI trampolines
+strip = true
+opt-level = 3
+
+# Debug release profile for troubleshooting
+[profile.release-dbg]
+inherits = "release"
+debug = true
+strip = false
+panic = "unwind"
+
+# Lints for all crates in the workspace
+[workspace.lints.clippy]
+all = { level = "deny", priority = -3 }
+cargo = { level = "warn", priority = -2 }
+pedantic = { level = "warn", priority = -1 }
+
+cast_lossless = { level = "allow", priority = 1 }
+cast_possible_truncation = { level = "allow", priority = 1 }
+cast_possible_wrap = { level = "allow", priority = 1 }
+cast_precision_loss = { level = "allow", priority = 1 }
+cast_sign_loss = { level = "allow", priority = 1 }
+
+similar_names = { level = "allow", priority = 1 }
+unnecessary_wraps = { level = "allow", priority = 1 }
+unnested_or_patterns = { level = "allow", priority = 1 }
+unreadable_literal = { level = "allow", priority = 1 }
+
+multiple_crate_versions = { level = "allow", priority = 1 }
+module_inception = { level = "allow", priority = 1 }
+module_name_repetitions = { level = "allow", priority = 1 }
+needless_pass_by_value = { level = "allow", priority = 1 }
+wildcard_imports = { level = "allow", priority = 1 }
+cargo_common_metadata = { level = "allow", priority = 1 }

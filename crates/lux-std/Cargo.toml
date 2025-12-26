@@ -1,0 +1,53 @@
+[package]
+name = "lux-std"
+version = "0.1.0"
+edition = "2024"
+license = "MPL-2.0"
+repository = "https://github.com/lux-runtime/lux"
+description = "Lux standard library"
+
+[lib]
+path = "src/lib.rs"
+
+[lints]
+workspace = true
+
+[features]
+default = ["fs", "luau", "process", "regex", "serde", "stdio", "ffi", "signal"]
+
+fs = ["dep:lux-fs"]
+luau = ["dep:lux-luau"]
+process = ["dep:lux-process"]
+regex = ["dep:lux-regex"]
+serde = ["dep:lux-serde"]
+stdio = ["dep:lux-stdio"]
+ffi = ["dep:lux-ffi"]
+signal = ["dep:lux-signal"]
+
+[dependencies]
+mlua = { version = "0.11.4", features = ["luau"] }
+mlua-luau-scheduler = { version = "0.2.3", path = "../mlua-luau-scheduler" }
+
+async-channel = "2.3"
+async-fs = "2.1"
+async-io = "2.4"
+async-lock = "3.4"
+futures-lite = "2.6"
+
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = "0.4"
+
+lux-utils = { version = "0.1.0", path = "../lux-utils" }
+
+# FFI
+lux-ffi = { optional = true, version = "0.1.0", path = "../lux-ffi" }
+
+# Standard libraries
+lux-fs = { optional = true, version = "0.1.0", path = "../lux-fs" }
+lux-luau = { optional = true, version = "0.1.0", path = "../lux-luau" }
+lux-process = { optional = true, version = "0.1.0", path = "../lux-process" }
+lux-regex = { optional = true, version = "0.1.0", path = "../lux-regex" }
+lux-serde = { optional = true, version = "0.1.0", path = "../lux-serde" }
+lux-stdio = { optional = true, version = "0.1.0", path = "../lux-stdio" }
+lux-signal = { optional = true, version = "0.1.0", path = "../lux-signal" }

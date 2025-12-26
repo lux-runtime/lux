@@ -1,0 +1,19 @@
+[package]
+name = "lux-ffi"
+version = "0.1.0"
+edition = "2024"
+license = "MPL-2.0"
+repository = "https://github.com/lux-runtime/lux"
+description = "Lux standard library - FFI"
+
+[lib]
+path = "src/lib.rs"
+
+[lints]
+workspace = true
+
+[dependencies]
+mlua = { version = "0.11.4", features = ["luau"] }
+libloading = "0.8"
+lazy_static = "1.4"
+libffi = "5.0.0"
