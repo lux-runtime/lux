@@ -1,7 +1,7 @@
 # Default Ignore
 # Build Artifacts
 target/
-build/
+/build/
 **/*.dll
 **/*.exe
 **/*.pdb
