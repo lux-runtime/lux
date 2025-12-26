@@ -21,7 +21,6 @@ debug.txt
 .idea/
 *.iml
 *.swp
-.luaurc
 
 # System
 Thumbs.db
@@ -36,5 +35,4 @@ convert_icon.luau
 # We want: crates/, bin/, assets/, lux_packages/ (if source), Cargo.toml, Cargo.lock, LICENSE, README.md, build.bat, test.bat, stylua.toml, .gitattributes, tests/ (Wait, user said "não arquivos de teste", so ignoring tests/)
 
 # User specific exclusions
-tests/
 lux_packages/
