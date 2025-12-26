@@ -3,7 +3,7 @@
 //! Lux FFI Module
 //!
 //! Re-implements LuaJIT FFI for Lux using modular architecture.
-
+#[allow(dead_code)]
 use libloading::{Library, Symbol};
 use mlua::prelude::*;
 use std::sync::Arc;

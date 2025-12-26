@@ -31,7 +31,6 @@ Thumbs.db
 tmp/
 script.luau
 convert_icon.luau
-install.ps1
 
 # Explicitly Keep (implicit via not ignoring)
 # We want: crates/, bin/, assets/, lux_packages/ (if source), Cargo.toml, Cargo.lock, LICENSE, README.md, build.bat, test.bat, stylua.toml, .gitattributes, tests/ (Wait, user said "não arquivos de teste", so ignoring tests/)

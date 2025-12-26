@@ -1,0 +1,15 @@
+[package]
+name = "lux-uuid"
+version = "0.1.0"
+edition = "2024"
+license = "MPL-2.0"
+repository = "https://github.com/lux-runtime/lux"
+description = "UUID v4 and v7 generation for Lux"
+
+[lints]
+workspace = true
+
+[dependencies]
+mlua = { version = "0.11.4", features = ["luau"] }
+lux-utils = { version = "0.1.0", path = "../lux-utils" }
+uuid = { version = "1", features = ["v4", "v7"] }

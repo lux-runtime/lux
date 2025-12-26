@@ -13,7 +13,19 @@ path = "src/lib.rs"
 workspace = true
 
 [features]
-default = ["fs", "luau", "process", "regex", "serde", "stdio", "ffi", "signal"]
+default = [
+    "fs",
+    "luau",
+    "process",
+    "regex",
+    "serde",
+    "stdio",
+    "ffi",
+    "signal",
+    "uuid",
+    "noise",
+    "base64",
+]
 
 fs = ["dep:lux-fs"]
 luau = ["dep:lux-luau"]
@@ -23,6 +35,9 @@ serde = ["dep:lux-serde"]
 stdio = ["dep:lux-stdio"]
 ffi = ["dep:lux-ffi"]
 signal = ["dep:lux-signal"]
+uuid = ["dep:lux-uuid"]
+noise = ["dep:lux-noise"]
+base64 = ["dep:lux-base64"]
 
 [dependencies]
 mlua = { version = "0.11.4", features = ["luau"] }
@@ -36,9 +51,16 @@ futures-lite = "2.6"
 
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-chrono = "0.4"
 
 lux-utils = { version = "0.1.0", path = "../lux-utils" }
+
+# Core global crates (always included)
+lux-datetime = { version = "0.1.0", path = "../lux-datetime" }
+lux-task = { version = "0.1.0", path = "../lux-task" }
+lux-vector = { version = "0.1.0", path = "../lux-vector" }
+lux-color = { version = "0.1.0", path = "../lux-color" }
+lux-udim = { version = "0.1.0", path = "../lux-udim" }
+lux-enum = { version = "0.1.0", path = "../lux-enum" }
 
 # FFI
 lux-ffi = { optional = true, version = "0.1.0", path = "../lux-ffi" }
@@ -51,3 +73,6 @@ lux-regex = { optional = true, version = "0.1.0", path = "../lux-regex" }
 lux-serde = { optional = true, version = "0.1.0", path = "../lux-serde" }
 lux-stdio = { optional = true, version = "0.1.0", path = "../lux-stdio" }
 lux-signal = { optional = true, version = "0.1.0", path = "../lux-signal" }
+lux-uuid = { optional = true, version = "0.1.0", path = "../lux-uuid" }
+lux-noise = { optional = true, version = "0.1.0", path = "../lux-noise" }
+lux-base64 = { optional = true, version = "0.1.0", path = "../lux-base64" }

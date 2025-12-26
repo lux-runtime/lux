@@ -1,0 +1,14 @@
+[package]
+name = "lux-vector"
+version = "0.1.0"
+edition = "2024"
+license = "MPL-2.0"
+repository = "https://github.com/lux-runtime/lux"
+description = "High-performance Vector2 and Vector3 types for Lux"
+
+[lints]
+workspace = true
+
+[dependencies]
+mlua = { version = "0.11.4", features = ["luau"] }
+lux-utils = { version = "0.1.0", path = "../lux-utils" }

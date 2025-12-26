@@ -103,8 +103,10 @@ impl Runtime {
             feature = "std-serde",
             feature = "std-stdio",
             feature = "std-ffi",
-            feature = "std-runservice",
             feature = "std-signal",
+            feature = "std-uuid",
+            feature = "std-noise",
+            feature = "std-base64",
         ))]
         {
             lux_std::set_global_version(&lua, env!("CARGO_PKG_VERSION"));
@@ -130,8 +132,10 @@ impl Runtime {
             feature = "std-serde",
             feature = "std-stdio",
             feature = "std-ffi",
-            feature = "std-runservice",
             feature = "std-signal",
+            feature = "std-uuid",
+            feature = "std-noise",
+            feature = "std-base64",
         ))]
         {
             let g_table = lux_std::LuxStandardGlobal::GTable;
@@ -353,23 +357,6 @@ impl Runtime {
                 format!("Failed to read file at path \"{}\"", module_path.target())
             })?;
 
-        // Set the script context BEFORE executing so script.Parent etc works correctly
-        #[cfg(any(
-            feature = "std-fs",
-            feature = "std-luau",
-            feature = "std-process",
-            feature = "std-regex",
-            feature = "std-serde",
-            feature = "std-stdio",
-            feature = "std-ffi",
-            feature = "std-runservice",
-            feature = "std-signal",
-        ))]
-        {
-            let script_path = module_path.target();
-            lux_std::set_script_context(&self.lua, script_path)?;
-        }
-
         let module_name = format!("{FILE_CHUNK_PREFIX}{module_path}");
         let module_contents = strip_shebang(contents);
 
@@ -404,8 +391,10 @@ impl Runtime {
             feature = "std-serde",
             feature = "std-stdio",
             feature = "std-ffi",
-            feature = "std-runservice",
             feature = "std-signal",
+            feature = "std-uuid",
+            feature = "std-noise",
+            feature = "std-base64",
         ))]
         {
             lux_std::inject_std(self.lua.clone())?;

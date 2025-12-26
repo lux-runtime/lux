@@ -608,6 +608,60 @@ end
 
 --[=[
     @within FFI
+    @tag must_use
+
+    Batch processes an array of doubles using a C function.
+    
+    Zero-allocation overhead loop for high performance number crunching.
+    
+    @param func -- The cached C function (e.g. ffi.C.sin)
+    @param input -- Input pointer (CData or memory address)
+    @param output -- Output pointer (CData or memory address)
+    @param count -- Number of elements to process
+    @return number -- Number of elements processed
+    
+    ### Example
+    ```lua
+    local count = 1000
+    local input = ffi.new("double[?]", count)
+    local output = ffi.new("double[?]", count)
+    
+    -- Fill input
+    for i = 0, count-1 do input[i] = i * 0.1 end
+    
+    -- Batch process 'sin'
+    ffi.batch(ffi.C.sin, input, output, count)
+    ```
+]=]
+function ffi.batch(func: any, input: CData | number, output: CData | number, count: number): number
+	return 0
+end
+
+--[=[
+    @within FFI
+    @tag must_use
+
+    Batch processes two arrays of doubles using a binary C function.
+    
+    @param func -- The cached C function (e.g. ffi.C.pow)
+    @param input1 -- First input pointer
+    @param input2 -- Second input pointer
+    @param output -- Output pointer
+    @param count -- Number of elements to process
+    @return number -- Number of elements processed
+]=]
+function ffi.batch2(
+	func: any,
+	input1: CData | number,
+	input2: CData | number,
+	output: CData | number,
+	count: number
+): number
+	return 0
+end
+
+--[=[
+    @within FFI
 
     Associates a metatable with a C type for operator overloading.
 

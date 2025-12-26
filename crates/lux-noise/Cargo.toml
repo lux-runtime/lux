@@ -1,0 +1,15 @@
+[package]
+name = "lux-noise"
+version = "0.1.0"
+edition = "2024"
+license = "MPL-2.0"
+repository = "https://github.com/lux-runtime/lux"
+description = "Perlin and Simplex noise generation for Lux"
+
+[lints]
+workspace = true
+
+[dependencies]
+mlua = { version = "0.11.4", features = ["luau"] }
+lux-utils = { version = "0.1.0", path = "../lux-utils" }
+noise = "0.9"

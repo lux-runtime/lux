@@ -1,0 +1,15 @@
+[package]
+name = "lux-base64"
+version = "0.1.0"
+edition = "2024"
+license = "MPL-2.0"
+repository = "https://github.com/lux-runtime/lux"
+description = "Fast Base64 encoding/decoding for Lux"
+
+[lints]
+workspace = true
+
+[dependencies]
+mlua = { version = "0.11.4", features = ["luau"] }
+lux-utils = { version = "0.1.0", path = "../lux-utils" }
+base64 = "0.22"

@@ -1,3 +1,5 @@
+#![allow(clippy::cargo_common_metadata)]
+
 //! Task library - spawn, defer, delay, wait, cancel
 //!
 //! Provides Roblox-compatible task scheduling functions that integrate
@@ -12,6 +14,14 @@ use mlua::prelude::*;
 use mlua_luau_scheduler::Functions;
 
 use lux_utils::TableBuilder;
+
+const TYPEDEFS: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/types.d.luau"));
+
+/// Returns type definitions for the task library.
+#[must_use]
+pub fn typedefs() -> String {
+    TYPEDEFS.to_string()
+}
 
 const DELAY_IMPL_LUA: &str = r"
 return defer(function(...)

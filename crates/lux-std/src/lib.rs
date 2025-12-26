@@ -8,7 +8,6 @@ mod library;
 mod require;
 
 pub use self::global::LuxStandardGlobal;
-pub use self::globals::script::set_script_context;
 pub use self::globals::version::set_global_version;
 pub use self::library::LuxStandardLibrary;
 
@@ -42,5 +41,11 @@ pub fn inject_std(lua: Lua) -> LuaResult<()> {
         let module = library.module(lua.clone())?;
         lua.register_module(&alias, module)?;
     }
+    Ok(())
+}
+
+/// Stub for set_script_context (script global was removed)
+pub fn set_script_context(_lua: &Lua, _path: &std::path::Path) -> LuaResult<()> {
+    // Script global has been removed, this is now a no-op
     Ok(())
 }

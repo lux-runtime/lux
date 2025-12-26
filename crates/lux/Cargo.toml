@@ -29,6 +29,9 @@ std-serde = ["dep:lux-std", "lux-std/serde"]
 std-stdio = ["dep:lux-std", "lux-std/stdio"]
 std-ffi = ["dep:lux-std", "lux-std/ffi"]
 std-signal = ["dep:lux-std", "lux-std/signal"]
+std-uuid = ["dep:lux-std", "lux-std/uuid"]
+std-noise = ["dep:lux-std", "lux-std/noise"]
+std-base64 = ["dep:lux-std", "lux-std/base64"]
 
 std = [
     "std-fs",
@@ -39,6 +42,9 @@ std = [
     "std-stdio",
     "std-ffi",
     "std-signal",
+    "std-uuid",
+    "std-noise",
+    "std-base64",
 ]
 
 cli = ["dep:clap", "dep:rustyline", "dep:zip"]

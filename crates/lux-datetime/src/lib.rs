@@ -1,3 +1,5 @@
+#![allow(clippy::cargo_common_metadata)]
+
 //! DateTime - Roblox-compatible DateTime type
 //!
 //! Provides the exact Roblox DateTime API:
@@ -20,6 +22,14 @@ use chrono::{
 use lux_utils::TableBuilder;
 use mlua::prelude::*;
 use std::cmp::Ordering;
+
+const TYPEDEFS: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/types.d.luau"));
+
+/// Returns type definitions for the DateTime library.
+#[must_use]
+pub fn typedefs() -> String {
+    TYPEDEFS.to_string()
+}
 
 /// DateTime struct - wraps chrono UTC datetime
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
@@ -221,7 +231,7 @@ impl LuaUserData for DateTime {
     }
 }
 
-/// Create the DateTime global
+/// Create the DateTime global table
 pub fn create(lua: Lua) -> LuaResult<LuaValue> {
     TableBuilder::new(lua)?
         .with_function("now", |lua, ()| lua.create_userdata(DateTime::now()))?

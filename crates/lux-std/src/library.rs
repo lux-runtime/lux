@@ -14,6 +14,9 @@ pub enum LuxStandardLibrary {
     #[cfg(feature = "stdio")]      Stdio,
     #[cfg(feature = "ffi")]        Ffi,
     #[cfg(feature = "signal")]     Signal,
+    #[cfg(feature = "uuid")]       Uuid,
+    #[cfg(feature = "noise")]      Noise,
+    #[cfg(feature = "base64")]     Base64,
 }
 
 impl LuxStandardLibrary {
@@ -27,6 +30,9 @@ impl LuxStandardLibrary {
         #[cfg(feature = "stdio")]      Self::Stdio,
         #[cfg(feature = "ffi")]        Self::Ffi,
         #[cfg(feature = "signal")]     Self::Signal,
+        #[cfg(feature = "uuid")]       Self::Uuid,
+        #[cfg(feature = "noise")]      Self::Noise,
+        #[cfg(feature = "base64")]     Self::Base64,
     ];
 
     #[must_use]
@@ -42,6 +48,9 @@ impl LuxStandardLibrary {
             #[cfg(feature = "stdio")]      Self::Stdio      => "stdio",
             #[cfg(feature = "ffi")]        Self::Ffi        => "ffi",
             #[cfg(feature = "signal")]     Self::Signal     => "signal",
+            #[cfg(feature = "uuid")]       Self::Uuid       => "uuid",
+            #[cfg(feature = "noise")]      Self::Noise      => "noise",
+            #[cfg(feature = "base64")]     Self::Base64     => "base64",
             _ => unreachable!(),
         }
     }
@@ -59,6 +68,9 @@ impl LuxStandardLibrary {
             #[cfg(feature = "stdio")]      Self::Stdio      => lux_stdio::typedefs(),
             #[cfg(feature = "ffi")]        Self::Ffi        => lux_ffi::typedefs(),
             #[cfg(feature = "signal")]     Self::Signal     => lux_signal::typedefs(),
+            #[cfg(feature = "uuid")]       Self::Uuid       => lux_uuid::typedefs(),
+            #[cfg(feature = "noise")]      Self::Noise      => lux_noise::typedefs(),
+            #[cfg(feature = "base64")]     Self::Base64     => lux_base64::typedefs(),
             _ => unreachable!(),
         }
     }
@@ -75,6 +87,9 @@ impl LuxStandardLibrary {
             #[cfg(feature = "stdio")]      Self::Stdio      => lux_stdio::module(lua),
             #[cfg(feature = "ffi")]        Self::Ffi        => lux_ffi::module(lua),
             #[cfg(feature = "signal")]     Self::Signal     => lux_signal::module(lua),
+            #[cfg(feature = "uuid")]       Self::Uuid       => lux_uuid::module(lua),
+            #[cfg(feature = "noise")]      Self::Noise      => lux_noise::module(lua),
+            #[cfg(feature = "base64")]     Self::Base64     => lux_base64::module(lua),
             _ => unreachable!(),
         };
         res.map_err(|e| e.context(format!("Failed to create library '{}'", self.name())))
@@ -95,6 +110,9 @@ impl FromStr for LuxStandardLibrary {
             #[cfg(feature = "stdio")]      "stdio"      => Self::Stdio,
             #[cfg(feature = "ffi")]        "ffi"        => Self::Ffi,
             #[cfg(feature = "signal")]     "signal"     => Self::Signal,
+            #[cfg(feature = "uuid")]       "uuid"       => Self::Uuid,
+            #[cfg(feature = "noise")]      "noise"      => Self::Noise,
+            #[cfg(feature = "base64")]     "base64"     => Self::Base64,
             _ => return Err(format!("Unknown library '{low}'")),
         })
     }
