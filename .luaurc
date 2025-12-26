@@ -1,0 +1,19 @@
+{
+  "languageMode": "strict",
+  "lint": {
+    "*": true
+  },
+  "lintErrors": false,
+  "typeErrors": true,
+  "globals": [
+    "warn",
+    "script",
+    "declare"
+  ],
+  "aliases": {
+    "lux": ".lux/types/",
+    "tests": "./tests",
+    "require-tests": "./tests/require/tests",
+    "lux_packages": "./lux_packages"
+  }
+}
