@@ -55,6 +55,10 @@ jobs:
 
       # --- Setup Tools ---
 
+      - name: Install WiX Toolset (Windows)
+        if: matrix.use_wix
+        run: choco install wixtoolset -y
+
       - name: Install cargo-wix (Windows)
         if: matrix.use_wix
         run: cargo install cargo-wix
